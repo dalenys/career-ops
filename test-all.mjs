@@ -1141,6 +1141,22 @@ if (
   fail('pipeline mode missing batch liveness sweep for unconfirmed entries');
 }
 
+const agentsInstructions = readFile('AGENTS.md');
+const scanModeInstructions = readFile('modes/scan.md');
+const doctorInstructions = readFile('doctor.mjs');
+if (
+  agentsInstructions.includes('node check-liveness.mjs <url>') &&
+  agentsInstructions.includes('NEVER decide liveness from a bare WebSearch/WebFetch snippet') &&
+  scanModeInstructions.includes('node check-liveness.mjs <url>') &&
+  scanModeInstructions.includes('skipped_unconfirmed') &&
+  scanModeInstructions.includes('never reinterpret `uncertain` as expired') &&
+  doctorInstructions.includes('check-liveness.mjs remains available')
+) {
+  pass('scan verification falls back to the repo-local liveness checker');
+} else {
+  fail('scan verification still depends exclusively on interactive browser tools');
+}
+
 // ── 9. LOCAL PARSER CONTRACT ────────────────────────────────────
 
 console.log('\n9. Local parser contract');
