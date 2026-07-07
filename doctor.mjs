@@ -10,6 +10,7 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import yaml from 'js-yaml';
 import { discoverPlugins, pluginRoots, pluginStatus } from './plugins/_engine.mjs';
+import { resolveExtractorMode } from './browser-extract.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
@@ -82,12 +83,12 @@ async function checkPlaywright() {
   }
 }
 
-// Interactive browser tools (`browser_navigate` / `browser_snapshot`) for SPA discovery
-// and JD extraction are provided by the Playwright MCP server, usually registered
-// through a project-level MCP config (for example `.mcp.json`,
-// `.claude/settings.json`, or `.claude/settings.local.json`). Repository-local
-// liveness checks do not require MCP: check-liveness.mjs uses ATS APIs and falls back
-// to its own Playwright browser. Doctor keeps this warning non-fatal.
+// The browser tools (`browser_navigate` / `browser_snapshot`) that scan / pipeline /
+// apply rely on are provided by the Playwright MCP server, usually registered through a
+// project-level MCP config (for example `.mcp.json`, `.claude/settings.json`, or
+// `.claude/settings.local.json`). When no common config is detected, SPA job boards can
+// silently return empty or stale content (#522), so doctor surfaces a non-fatal warning
+// instead of letting it fail invisibly.
 const PLAYWRIGHT_MCP_WARNING = 'Playwright MCP tools not detected';
 
 function playwrightMcpConfigured(root) {
@@ -109,6 +110,25 @@ function playwrightMcpConfigured(root) {
   return false;
 }
 
+// Report which scan/JD extractor is active (config/profile.yml → scan.extractor).
+// `mcp` (default) uses the browser MCP; `cli` uses browser-extract.mjs. When cli
+// is selected but the helper is missing, the modes fall back to MCP — surface
+// that as a warning, never a failure.
+function checkScanExtractor(root) {
+  const mode = resolveExtractorMode(join(root, 'config', 'profile.yml'));
+  if (mode === 'cli') {
+    if (existsSync(join(root, 'browser-extract.mjs'))) {
+      return { pass: true, label: 'Scan extractor: cli (browser-extract.mjs)' };
+    }
+    return {
+      warn: true,
+      label: 'Scan extractor: cli set, but browser-extract.mjs is missing — falls back to MCP',
+      fix: ['Restore browser-extract.mjs, or set `scan.extractor: mcp` in config/profile.yml.'],
+    };
+  }
+  return { pass: true, label: 'Scan extractor: mcp (default)' };
+}
+
 function checkPlaywrightMcp(root) {
   if (playwrightMcpConfigured(root)) {
     return { pass: true, label: 'Playwright MCP server configured' };
@@ -117,10 +137,9 @@ function checkPlaywrightMcp(root) {
     warn: true,
     label: PLAYWRIGHT_MCP_WARNING,
     fix: [
-      'Interactive browser tools for SPA career-page discovery and JD extraction need a',
+      'Browser-driven JD fetching and liveness checks (scan / pipeline / apply) need the',
       'Playwright MCP server. No project-level MCP config was detected in `.mcp.json`',
-      'or `.claude/settings*.json`. Use `node check-liveness.mjs <url>` for repository-local',
-      'verification; check-liveness.mjs remains available via ATS APIs and local Playwright.',
+      'or `.claude/settings*.json`, so SPA job boards may return empty or stale content.',
       'Tracking: https://github.com/santifer/career-ops/issues/506',
     ],
   };
@@ -311,6 +330,7 @@ async function main() {
     checkDependencies(),
     await checkPlaywright(),
     checkPlaywrightMcp(projectRoot),
+    checkScanExtractor(projectRoot),
     ...USER_LAYER_PREREQS.map(checkPrereq),
     checkFonts(),
     checkAutoDir('data'),
