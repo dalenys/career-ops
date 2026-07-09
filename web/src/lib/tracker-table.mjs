@@ -29,30 +29,31 @@ const WEB_FIELD = {
   score: "score", status: "status", pdf: "pdf", report: "report", notes: "notes",
 };
 
-/** @type {Map<string, Record<string, string>>} */
+/** @type {Map<string, { mtimeMs: number, aliases: Record<string, string> }>} */
 const aliasCache = new Map();
 
 /**
  * Load the shared header-alias table (lowercased header text → canonical field)
- * from `{rootDir}/tracker-aliases.json`. Cached per root — it is a system file
- * that only changes on a system update. A missing/corrupt file (core checkout
- * predating the JSON) yields an empty table: no header row is then detected and
- * parseApplications falls back to the legacy fixed column order.
+ * from `{rootDir}/tracker-aliases.json`. Cached per root + mtime — it is a
+ * system file that only changes on a system update. A missing/corrupt file
+ * (core checkout predating the JSON) yields an empty table but is not cached:
+ * recovery must be visible on the next request without restarting the server.
  * @param {string} rootDir - career-ops root (careerOpsRoot() on the web side).
  * @returns {Record<string, string>}
  */
 export function loadHeaderAliases(rootDir) {
-  const cached = aliasCache.get(rootDir);
-  if (cached) return cached;
-  /** @type {Record<string, string>} */
-  let aliases = {};
+  const aliasPath = path.join(rootDir, "tracker-aliases.json");
   try {
-    aliases = JSON.parse(fs.readFileSync(path.join(rootDir, "tracker-aliases.json"), "utf8"));
+    const mtimeMs = fs.statSync(aliasPath).mtimeMs;
+    const cached = aliasCache.get(rootDir);
+    if (cached && cached.mtimeMs === mtimeMs) return cached.aliases;
+    const aliases = JSON.parse(fs.readFileSync(aliasPath, "utf8"));
+    aliasCache.set(rootDir, { mtimeMs, aliases });
+    return aliases;
   } catch {
-    aliases = {};
+    aliasCache.delete(rootDir);
+    return {};
   }
-  aliasCache.set(rootDir, aliases);
-  return aliases;
 }
 
 /**
