@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.1](https://github.com/dalenys/career-ops/compare/web-v0.2.0...web-v0.2.1) (2026-07-20)
+
+
+### Bug Fixes
+
+* **deps:** update npm dependencies ([#1593](https://github.com/dalenys/career-ops/issues/1593)) ([253c571](https://github.com/dalenys/career-ops/commit/253c5719df403cdaa493db27cdd17349f54f7889))
+* **tracker:** retrofit remaining positional readers onto the shared header-aware parser ([#1598](https://github.com/dalenys/career-ops/issues/1598)) ([369a5ff](https://github.com/dalenys/career-ops/commit/369a5ffcf6623750fcbedbd16be7d3c1c84f1111))
+* **web:** 44px tap-targets at the component level ([#1629](https://github.com/dalenys/career-ops/issues/1629)) ([388542f](https://github.com/dalenys/career-ops/commit/388542f3c0a2f82eeac83be8db5b616c213225b9))
+* **web:** contrast tokens — AA across both themes ([#1627](https://github.com/dalenys/career-ops/issues/1627)) ([ee89bea](https://github.com/dalenys/career-ops/commit/ee89bea997702d40d1cc01620f727bbb66146b9b))
+* **web:** portals copy + analytics semantics ([#1628](https://github.com/dalenys/career-ops/issues/1628)) ([f8daa19](https://github.com/dalenys/career-ops/commit/f8daa19d8ea164dd2bbb63834f2d048a34ccaa63))
+
 ## [0.2.0](https://github.com/santifer/career-ops/compare/web-v0.1.0...web-v0.2.0) (2026-07-05)
 
 

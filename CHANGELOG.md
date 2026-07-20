@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.18.0](https://github.com/dalenys/career-ops/compare/career-ops-v1.17.0...career-ops-v1.18.0) (2026-07-20)
+
+
+### Features
+
+* **i18n:** add German translations of interview modes ([#1610](https://github.com/dalenys/career-ops/issues/1610)) ([a6b6180](https://github.com/dalenys/career-ops/commit/a6b618012045fc543e3ced0db10bb1ad37cd75f9))
+* **i18n:** add Indonesian (id) modes ([#1474](https://github.com/dalenys/career-ops/issues/1474)) ([6262d53](https://github.com/dalenys/career-ops/commit/6262d532494e01964c99a30c8ea1347bcd9de730))
+* **interview-prep:** structured Panel Intel table ([#1502](https://github.com/dalenys/career-ops/issues/1502)) ([72b1d5e](https://github.com/dalenys/career-ops/commit/72b1d5e8c442288b59c6455ce2eb25b99b283b4d))
+* match employer reply candidates to application tracker ([#1607](https://github.com/dalenys/career-ops/issues/1607)) ([30df267](https://github.com/dalenys/career-ops/commit/30df267615c205ee5e2506af15288009808a9205)), closes [#1584](https://github.com/dalenys/career-ops/issues/1584)
+* **providers:** add Lever EU instance (jobs.eu.lever.co) ([#1571](https://github.com/dalenys/career-ops/issues/1571)) ([bd81e37](https://github.com/dalenys/career-ops/commit/bd81e37181c0dab0a9d4c7e4c09a3e74997a7515))
+* **providers:** Cornerstone OnDemand (csod) + Rheinmetall ([#1549](https://github.com/dalenys/career-ops/issues/1549)) ([ffbbf41](https://github.com/dalenys/career-ops/commit/ffbbf41fb35df1a7b97cdcffecc3438d5e64ec86))
+* **scan:** add zero-token Eightfold AI ATS provider ([#4](https://github.com/dalenys/career-ops/issues/4)) ([1d8f0dc](https://github.com/dalenys/career-ops/commit/1d8f0dc7bb105dfdaba8bff118565a77ebae0b34))
+* **stats:** lifetime pipeline stats aggregator ([#1605](https://github.com/dalenys/career-ops/issues/1605)) ([1b23baa](https://github.com/dalenys/career-ops/commit/1b23baa1159c01884a6dab54136031a1b5945097))
+
+
+### Bug Fixes
+
+* **dashboard:** duplicate tracker headers resolve last-occurrence to match JS reader ([#1602](https://github.com/dalenys/career-ops/issues/1602)) ([edbfd8d](https://github.com/dalenys/career-ops/commit/edbfd8d4e4a395ced64fef13fea6d72c010dab08))
+* **dashboard:** fall back to market_comp_estimate for pay badge ([#5](https://github.com/dalenys/career-ops/issues/5)) ([2de6b70](https://github.com/dalenys/career-ops/commit/2de6b7052b59e5e2b0402d513c856f69e8d59a27))
+* **deps:** update npm dependencies ([#1593](https://github.com/dalenys/career-ops/issues/1593)) ([253c571](https://github.com/dalenys/career-ops/commit/253c5719df403cdaa493db27cdd17349f54f7889))
+* **gitignore:** close user-layer gaps per DATA_CONTRACT.md ([e81abb6](https://github.com/dalenys/career-ops/commit/e81abb6a9f7b5656baa9825a3e6b5f1325946c28))
+* **pdf:** disambiguate CV filenames by report number, gitignore discard.log ([bf8bc01](https://github.com/dalenys/career-ops/commit/bf8bc010c806abf4676fffe0f4401b42e39eceaf))
+* **scan:** use local liveness fallback ([#1](https://github.com/dalenys/career-ops/issues/1)) ([53e0d72](https://github.com/dalenys/career-ops/commit/53e0d72c9b4bf5be23b71b169e6ed2aece1597c4))
+* **tracker:** retrofit remaining positional readers onto the shared header-aware parser ([#1598](https://github.com/dalenys/career-ops/issues/1598)) ([369a5ff](https://github.com/dalenys/career-ops/commit/369a5ffcf6623750fcbedbd16be7d3c1c84f1111))
+* **web:** 44px tap-targets at the component level ([#1629](https://github.com/dalenys/career-ops/issues/1629)) ([388542f](https://github.com/dalenys/career-ops/commit/388542f3c0a2f82eeac83be8db5b616c213225b9))
+* **web:** contrast tokens — AA across both themes ([#1627](https://github.com/dalenys/career-ops/issues/1627)) ([ee89bea](https://github.com/dalenys/career-ops/commit/ee89bea997702d40d1cc01620f727bbb66146b9b))
+* **web:** portals copy + analytics semantics ([#1628](https://github.com/dalenys/career-ops/issues/1628)) ([f8daa19](https://github.com/dalenys/career-ops/commit/f8daa19d8ea164dd2bbb63834f2d048a34ccaa63))
+
 ## [1.21.0](https://github.com/santifer/career-ops/compare/career-ops-v1.20.0...career-ops-v1.21.0) (2026-07-17)
 
 
