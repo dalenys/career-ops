@@ -6,6 +6,7 @@ data/follow-ups.md
 data/pipeline.md
 data/filtered-pending-urls.txt
 data/pipeline-archive.md
+data/discard.log
 data/scan-history.tsv
 data/scan-runs.tsv
 data/pdf-index.tsv
