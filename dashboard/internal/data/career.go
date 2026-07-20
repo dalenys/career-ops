@@ -22,6 +22,7 @@ var (
 	reTlDrColon      = regexp.MustCompile(`(?i)\*\*TL;DR:\*\*\s*(.+)`)
 	reRemote         = regexp.MustCompile(`(?i)\*\*Remote\*\*\s*\|\s*(.+)`)
 	reComp           = regexp.MustCompile(`(?i)\*\*Comp\*\*\s*\|\s*(.+)`)
+	reCompYAML       = regexp.MustCompile(`(?m)^market_comp_estimate:\s*"?([^"\n]+?)"?\s*$`)
 	reArchetypeColon = regexp.MustCompile(`(?i)\*\*(?:Arquetipo|Archetype):\*\*\s*(.+)`)
 	reArchetypeYAML  = regexp.MustCompile(`(?m)^archetype:\s*"?([^"\n]+)"?\s*$`)
 	reReportURL      = regexp.MustCompile(`(?m)^\*\*URL:\*\*\s*(https?://\S+)`)
@@ -559,6 +560,8 @@ func LoadReportSummary(careerOpsPath, reportPath string) (archetype, tldr, remot
 
 	if m := reComp.FindStringSubmatch(text); m != nil {
 		comp = cleanTableCell(m[1])
+	} else if m := reCompYAML.FindStringSubmatch(text); m != nil {
+		comp = strings.TrimSpace(m[1])
 	}
 
 	// Truncate long fields
